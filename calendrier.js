@@ -38,6 +38,11 @@ async function handleFormSubmit(e, data) {
     const selectedOption = form.querySelector(`input[name="reponse_jour_${data.day}"]:checked`);
     const rgpd = form.querySelector('input[name="rgpd_consent"]').checked;
 
+    // 2. LA VÉRIFICATION OBLIGATOIRE (Le code à ajouter)
+    if (!rgpdConsent.checked) {
+        alert("Veuillez cocher la case pour accepter d'être recontacté(e) et recevoir la newsletter afin de valider votre participation.");
+        return; // Stoppe l'exécution du reste de la fonction
+    }
     if (!selectedOption) {
         alert("Veuillez sélectionner une réponse.");
         return;
