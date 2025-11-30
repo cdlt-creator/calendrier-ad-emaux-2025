@@ -102,16 +102,45 @@ async function handleFormSubmit(e, data) {
         // door.style.pointerEvents = 'none'; 
     }
 
-    // Fermer la pop-up
-    window.closePopup();
+    // calendrier.js (NOUVEAU CODE DE REMPLACEMENT)
 
-    // Feedback utilisateur
+    // --- NOUVEAU CODE POUR L'AFFICHAGE DU MESSAGE (Remplacement des alertes) ---
+    
+    // 1. Trouver la réponse correcte textuelle
+    const correctAnswerValue = data.correctAnswer;
+    // data.options contient le tableau des options, data.correctAnswer contient 'A', 'B' ou 'C'.
+    const correctOption = data.options.find(opt => opt.value === correctAnswerValue);
+    // Récupère le texte de l'option (ex: "C. La puissance et le mouvement d'une vague")
+    const correctAnswerText = correctOption ? correctOption.text : 'Réponse non trouvée'; 
+
+    const mainPopupContent = document.getElementById('popup-quiz-content');
+    let messageContent = '';
+
     if (isCorrect) {
-        alert("Bonne réponse ! Votre participation est enregistrée sur le serveur.");
+        messageContent = `
+            <h4 style="color: green;">🎉 Bravo ! Bonne Réponse !</h4>
+            <p>Votre participation est enregistrée.</p>
+            <p style="font-size: 0.9em; margin-top: 20px;">Rendez-vous demain pour une nouvelle question !</p>
+        `;
     } else {
-        alert("Participation enregistrée sur le serveur. Tentez votre chance demain !");
+        messageContent = `
+            <h4 style="color: var(--primary-marine);">Dommage !</h4>
+            <p>La bonne réponse était : <strong>${correctAnswerText}</strong></p>
+            <p>Votre participation est enregistrée. Tentez à nouveau votre chance demain !</p>
+        `;
     }
-}
+
+    // Remplacer le contenu du quiz par le message de confirmation
+    mainPopupContent.innerHTML = `
+        <a href="#" class="close-btn" onclick="closePopup()" style="position: absolute; top: 15px; right: 25px;">&times;</a>
+        <div style="padding: 40px; text-align: center;">
+            ${messageContent}
+            <button onclick="closePopup()" class="cta-button" style="margin-top: 30px;">Fermer</button>
+        </div>
+    `;
+
+    // Suppression de l'ancienne logique de fermeture et d'alertes
+} // Fin de handleFormSubmit
 
 
 // FONCTION : Construire et ouvrir la Pop-up
