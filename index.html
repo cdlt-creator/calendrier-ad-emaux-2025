@@ -724,11 +724,13 @@
                     <svg viewBox="0 0 448 512"><path d="M416 32H32C14.3 32 0 46.3 0 64v384c0 17.7 14.3 32 32 32h384c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32zM128 416H64V192h64v224zM96 160c-25.9 0-47.5-21.4-47.5-47.7 0-26.3 21.6-47.7 47.5-47.7s47.5 21.4 47.5 47.7c0 26.3-21.6 47.7-47.5 47.7zm320 256h-64V272c0-17.7-14.3-32-32-32s-32 14.3-32 32v144h-64V192h64v32.6c11.9-18.4 30.5-32.6 51.5-32.6 37.1 0 67.5 30.4 67.5 67.5v150.5z"/></svg>
                 </a>
             </div>
-            <div class="mention-links">
+           <div class="mention-links">
                 &copy; 2025 AD Émaux - Tous droits réservés. | 
-                <a href="https://adunbijouunehistoire.fr/mentions-legales/">Mentions Légales</a> | 
-                <a href="#">Politique de Confidentialité</a>
-            </div>
+            <a href="https://adunbijouunehistoire.fr/mentions-legales/" target="_blank">Mentions Légales</a> |
+            
+            <a href="#" onclick="openGdprInfo()">Politique de Confidentialité</a>
+            
+            <a href="#" onclick="openReglement()">Règlement du jeu</a>
         </div>
     </footer>
 
@@ -768,7 +770,30 @@
             <p>Les adresses e-mail collectées seront utilisées uniquement pour la gestion du jeu, la notification du gagnant, et l'envoi d'une newsletter d'AD Émaux **si le participant a donné son consentement explicite via la case à cocher**. Conformément à la loi Informatique et Libertés, les participants disposent d'un droit d'accès, de rectification et de suppression de leurs données.</p>
         </div>
     </div>
+<div id="gdpr-info-overlay" class="reglement-overlay" onclick="closePopupIfClickedOutside(event)" style="z-index: 10000;">
+        <div class="reglement-content" style="max-width: 550px; padding: 40px; text-align: left;">
+            
+            <h2 style="color: var(--primary-marine); font-family: 'Playfair Display', serif; margin-bottom: 20px; text-align: center;">Information Importante : Gestion des Données</h2>
 
+            <p>Ce calendrier de l'Avent est un jeu concours temporaire nécessitant une collecte de données spécifique, conformément au RGPD.</p>
+            
+            <h4 style="color: var(--accent-gold); margin-top: 20px;">Quelles données collectons-nous ?</h4>
+            <ul>
+                <li>Votre **adresse e-mail** (pour la participation au jeu et la notification du gagnant).</li>
+                <li>Votre **réponse au quiz** et votre statut de participation.</li>
+                <li>Votre **consentement** pour la newsletter (si la case est cochée).</li>
+            </ul>
+
+            <h4 style="color: var(--accent-gold); margin-top: 20px;">Où sont stockées vos données ?</h4>
+            <p>Les données du jeu sont stockées de manière sécurisée sur un **Google Sheet** (feuille de calcul Google) via un Google Apps Script. Ce stockage implique un transfert de données vers les serveurs de Google (hors UE).</p>
+
+            <p style="font-size: 0.9em; margin-top: 30px; border-top: 1px solid #eee; padding-top: 15px;">
+                En cliquant sur "J'ai compris", vous reconnaissez avoir pris connaissance de ces conditions de collecte et de stockage. Vous pouvez consulter l'intégralité de nos documents légaux ici : <a href="https://adunbijouunehistoire.fr/mentions-legales/" target="_blank" style="color: var(--primary-marine); text-decoration: underline;">Mentions Légales et Politique de Confidentialité</a>.
+            </p>
+            
+            <button onclick="acceptGdprInfo()" class="cta-button" style="margin-top: 30px; width: 100%; font-size: 1.1em;">J'ai compris et je peux commencer le jeu</button>
+        </div>
+    </div>
 
     <script src="qcm_data.js"></script>
     <script src="calendrier.js"></script>
