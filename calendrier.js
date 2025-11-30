@@ -296,44 +296,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 3. Ajout des écouteurs de clic
         door.addEventListener('click', doorClickHandler);
-    });
+    });// -------------------------------------------------------------------------
+// FONCTIONS GLOBALES (À placer à la fin du fichier, après le bloc DOMContentLoaded)
+// -------------------------------------------------------------------------
 
-    // FONCTIONS GLOBALES (Pour les boutons fermer / reset)
-    window.closePopup = function() {
-        document.getElementById('door-overlay').classList.remove('active');
-    };
+// FONCTIONS MODALES PRINCIPALES
+window.closePopup = function() {
+    document.getElementById('door-overlay').classList.remove('active');
+};
 
-    window.closePopupIfClickedOutside = function(e) {
-        if (e.target.id === 'door-overlay') {
-            window.closePopup();
-        }
-    };
-    
-    // Fonctionnalité Règlement (déjà dans index.html)
-    window.openReglement = function() {
-        document.getElementById('reglement-overlay').classList.add('active');
-    };
+window.closePopupIfClickedOutside = function(e) {
+    if (e.target.id === 'door-overlay') {
+        window.closePopup();
+    }
+};
 
-    window.closeReglement = function() {
-        document.getElementById('reglement-overlay').classList.remove('active');
-    };
+// Fonctionnalité Règlement
+window.openReglement = function() {
+    document.getElementById('reglement-overlay').classList.add('active');
+};
 
-    window.resetCalendar = function() {
-        if (confirm("Attention : Réinitialiser tout le calendrier ? Cette action ne supprime pas les entrées déjà enregistrées dans le Google Sheet.")) {
-            localStorage.clear();
-            location.reload();
-        }
-    };
-    
+window.closeReglement = function() {
+    document.getElementById('reglement-overlay').classList.remove('active');
+};
+
+// Fonction de Réinitialisation
+window.resetCalendar = function() {
+    if (confirm("Attention : Réinitialiser tout le calendrier ? Cette action ne supprime pas les entrées déjà enregistrées dans le Google Sheet.")) {
+        localStorage.clear();
+        location.reload();
+    }
+};
+    
 // Fonctionnalité Pop-up d'Information RGPD
-    window.openGdprInfo = function() {
-        document.getElementById('gdpr-info-overlay').classList.add('active');
-    };
+window.openGdprInfo = function() {
+    document.getElementById('gdpr-info-overlay').classList.add('active');
+};
 
-    // Fonction appelée par le bouton "J'ai compris"
-    window.acceptGdprInfo = function() {
-        // Enregistrer l'acceptation (pour ne pas rouvrir si on garde le localStorage)
-        localStorage.setItem('hasAcceptedGdprInfo', 'true'); 
-        // Fermer la modale
-        document.getElementById('gdpr-info-overlay').classList.remove('active');
-    };
+// Fonction appelée par le bouton "J'ai compris"
+window.acceptGdprInfo = function() {
+    // Enregistrer l'acceptation (pour ne pas rouvrir si on garde le localStorage)
+    localStorage.setItem('hasAcceptedGdprInfo', 'true'); 
+    // Fermer la modale
+    document.getElementById('gdpr-info-overlay').classList.remove('active');
+};
