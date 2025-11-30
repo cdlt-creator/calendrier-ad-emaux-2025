@@ -160,6 +160,7 @@
             font-weight: bold;
             border: 4px solid var(--accent-gold);
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            pointer-events: none; 
         }
         
 /* STYLE POUR LA PORTE APRÈS SOUMISSION (Affiche l'image) */
@@ -176,10 +177,6 @@
     justify-content: center;
     align-items: center;
     pointer-events: none; /* Toujours inactif après soumission */
-}
-
-.door.submitted {
-    pointer-events: none; /* Bloquer les clics sur toute la porte soumise */
 }
 
 /* 1. Style du conteneur pour centrer image et texte */
@@ -217,7 +214,6 @@
             filter: grayscale(80%);
             opacity: 0.7;
             cursor: not-allowed;
-            pointer-events: none; /* Bloquer les clics sur les portes verrouillées */
         }
         .door-back {
             display: none; 
@@ -500,7 +496,7 @@
     
     <div class="top-bar">
         <div class="container top-bar-content">
-            <span>+33 06 21 51 64 52 | <a href="contact@ad-emaux.fr" class="__cf_email__" data-cfemail="4f2c20213b2e2c3b0f2e2b622a222e3a3761293d">[email&#160;protected]</a></span>
+            <span>+33 06 21 51 64 52 | <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fb9894958f9a988fbb9a9fd69e969a8e83d59d89">[email&#160;protected]</a></span>
             <a href="https://ad-emaux.fr/">ad-emaux.fr</a>
         </div>
     </div>
@@ -745,7 +741,7 @@
         </div>
     </div>
     
-    <div class="reglement-overlay" id="reglement-overlay" onclick="closePopupIfClickedOutside(event)">
+    <div class="reglement-overlay" id="reglement-overlay" onclick="closeReglementIfClickedOutside(event)">
         <div class="reglement-content">
             <a href="#" class="close-btn" onclick="closeReglement()">&times;</a>
             <h3>Règlement du Jeu Concours "Calendrier de l'Avent AD Émaux 2025"</h3>
@@ -796,6 +792,7 @@
             <button onclick="acceptGdprInfo()" class="cta-button" style="margin-top: 30px; width: 100%; font-size: 1.1em;">J'ai compris et je peux commencer le jeu</button>
         </div>
     </div>
+
 
     <script src="qcm_data.js"></script>
     <script src="calendrier.js"></script>
