@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 doorFront.innerHTML = `
                     <div class="submitted-content">
                         <img src="${data.image}" alt="Aperçu jour ${day}" class="submitted-preview-img">
-                        <small>✅ Répondu</small>
+                        <small>Répondu</small>
                     </div>
                 `;
                 const doorBack = door.querySelector('.door-back');
