@@ -14,16 +14,14 @@ async function submitToGSheet(dayNumber, userEmail, userResponse, isCorrect, rgp
     formData.append('userEmail', userEmail);
     formData.append('userAnswer', userResponse);
     formData.append('correct', isCorrect ? 'Oui' : 'Non');
-    formData.append('rgpd_consent', rgpdConsent ? 'Oui' : 'Non'); // 🟢 AJOUT DU CONSENTEMENT
+    formData.append('rgpd_consent', rgpdConsent ? 'Oui' : 'Non'); 
 
     try {
-        const response = await fetch(APP_SCRIPT_URL, {
+        await fetch(APP_SCRIPT_URL, {
             method: 'POST',
-            mode: 'no-cors', // Essentiel pour contourner les restrictions CORS
+            mode: 'no-cors', 
             body: formData
         });
-
-        // Si le fetch réussit sans erreur réseau, on considère l'envoi réussi.
         return { success: true };
 
     } catch (error) {
@@ -38,7 +36,6 @@ async function handleFormSubmit(e, data) {
     e.preventDefault();
     const form = e.target;
     const email = form.querySelector('input[name="email"]').value;
-    // Récupération correcte de la réponse radio
     const selectedOption = form.querySelector(`input[name="reponse_jour_${data.day}"]:checked`);
     const rgpd = form.querySelector('input[name="rgpd_consent"]').checked;
 
@@ -47,26 +44,22 @@ async function handleFormSubmit(e, data) {
         return;
     }
     
-    // Honeypot check
     const hp = form.querySelector('input[name="hp_field"]').value;
     if (hp) {
         console.warn("Honeypot activé. Soumission ignorée.");
-        return; // Ignorer la soumission silencieusement si le champ honeypot est rempli
+        return; 
     }
 
 
     const userResponse = selectedOption.value;
     const isCorrect = (userResponse === data.correctAnswer);
 
-    // --- GESTION DE L'ATTENTE ---
     const submitBtn = form.querySelector('.btn-submit');
     submitBtn.disabled = true;
     submitBtn.textContent = 'Envoi en cours...';
 
-    // --- APPEL DE LA FONCTION D'ENVOI AU GSHEET ---
-    const submissionResult = await submitToGSheet(data.day, email, userResponse, isCorrect, rgpd); // 🟢 ENVOI RGPD
+    const submissionResult = await submitToGSheet(data.day, email, userResponse, isCorrect, rgpd); 
     
-    // Rétablir le bouton
     submitBtn.disabled = false;
     submitBtn.textContent = 'Je valide et participe';
 
@@ -78,13 +71,11 @@ async function handleFormSubmit(e, data) {
 
     // --- SUCCÈS : GESTION LOCALE ET VISUELLE ---
 
-    // Sauvegarde locale et mise à jour visuelle
     localStorage.setItem(`door_${data.day}_submitted`, 'true');
     const door = document.getElementById(`day-${data.day}`);
     if (door) {
         door.classList.add('submitted');
         
-        // 1. Mise à jour du recto (image en aperçu et texte discret)
         const doorFront = door.querySelector('.door-front');
         doorFront.innerHTML = `
             <div class="submitted-content">
@@ -93,18 +84,14 @@ async function handleFormSubmit(e, data) {
             </div>
         `;
         
-        // 2. Ajout de l'image au verso pour qu'elle s'affiche (pour le flip, si actif)
         const doorBack = door.querySelector('.door-back');
         doorBack.innerHTML = `<img src="${data.image}" alt="Image du jour ${data.day}" style="width:100%; height:100%; object-fit:cover;">`;
     }
 
-    // --- NOUVEAU CODE POUR L'AFFICHAGE DU MESSAGE (Remplacement des alertes) ---
+    // --- AFFICHAGE DU MESSAGE DE CONFIRMATION ---
     
-    // 1. Trouver la réponse correcte textuelle
     const correctAnswerValue = data.correctAnswer;
-    // data.options contient le tableau des options, data.correctAnswer contient 'A', 'B' ou 'C'.
     const correctOption = data.options.find(opt => opt.value === correctAnswerValue);
-    // Récupère le texte de l'option (ex: "C. La puissance et le mouvement d'une vague")
     const correctAnswerText = correctOption ? correctOption.text : 'Réponse non trouvée'; 
 
     const mainPopupContent = document.getElementById('popup-quiz-content');
@@ -124,7 +111,6 @@ async function handleFormSubmit(e, data) {
         `;
     }
 
-    // Remplacer le contenu du quiz par le message de confirmation
     mainPopupContent.innerHTML = `
         <a href="#" class="close-btn" onclick="closePopup()" style="position: absolute; top: 15px; right: 25px;">&times;</a>
         <div style="padding: 40px; text-align: center;">
@@ -132,8 +118,7 @@ async function handleFormSubmit(e, data) {
             <button onclick="closePopup()" class="cta-button" style="margin-top: 30px;">Fermer</button>
         </div>
     `;
-
-} // Fin de handleFormSubmit
+}
 
 
 // FONCTION : Construire et ouvrir la Pop-up
@@ -141,7 +126,7 @@ function openPopupWithData(data) {
     const popupContent = document.getElementById('popup-quiz-content');
     const overlay = document.getElementById('door-overlay');
 
-    // --- GESTION SPÉCIFIQUE DU JOUR 25 (MESSAGE DE NOËL ET TIRAGE) ---
+    // --- GESTION SPÉCIFIQUE DU JOUR 25 ---
     if (data.day === 25) {
         
         popupContent.innerHTML = `
@@ -164,11 +149,9 @@ function openPopupWithData(data) {
                 <button onclick="closePopup()" class="cta-button" style="margin-top: 30px;">Fermer</button>
             </div>
         `;
-        // Afficher la pop-up et sortir de la fonction
         overlay.classList.add('active');
         return; 
     }
-    // Fin de la gestion Jour 25
     
     // Génération des boutons radio HTML
     let optionsHTML = '';
@@ -181,7 +164,7 @@ function openPopupWithData(data) {
         `;
     });
 
-    // Injection du HTML dynamique (avec l'image, la question et le formulaire)
+    // Injection du HTML dynamique 
     popupContent.innerHTML = `
         <img src="${data.image}" alt="Image jour ${data.day}">
         <h4>${data.title} (Jour ${data.day})</h4>
@@ -210,7 +193,6 @@ function openPopupWithData(data) {
 
     // Gérer la soumission du formulaire généré
     const form = document.getElementById('current-quiz-form');
-    // Ajout de l'écouteur ASYNCHRONE et passage des données QCM
     form.addEventListener('submit', async function(e) {
         await handleFormSubmit(e, data); 
     });
@@ -222,30 +204,14 @@ const doorClickHandler = function(e) {
     const doorElement = e.currentTarget; 
     const day = parseInt(doorElement.dataset.day);
 
-    // Sécurité : ne rien faire si verrouillé ou déjà soumis
     if (doorElement.classList.contains('locked') || doorElement.classList.contains('submitted')) {
         return;
     }
 
-    // Si c'est le jour 25 (Cadeau / Message final)
-    if (day === 25) {
-        // Cette alerte sera remplacée par openPopupWithData si la pop-up Jour 25 est ouverte.
-        // En attendant, on garde la logique précédente pour le jour 25
-        const data = qcmData.find(d => d.day === day);
-        if (data) {
-            openPopupWithData(data); // Ouvre la pop-up Jour 25 qui contient le message de Noël
-        } else {
-            alert("Joyeux Noël ! Le tirage au sort aura lieu bientôt.");
-        }
-        return;
-    }
-
-    // Récupération des données depuis qcm_data.js (doit être globalement accessible)
-    // ⚠️ qcmData est supposé être défini dans qcm_data.js et accessible ici.
     const data = qcmData.find(d => d.day === day); 
 
     if (data) {
-        openPopupWithData(data); // Appel de la fonction qui construit le contenu
+        openPopupWithData(data); 
     } else {
         console.error("Aucune donnée trouvée pour le jour " + day + ". Veuillez vérifier qcm_data.js.");
     }
@@ -253,18 +219,13 @@ const doorClickHandler = function(e) {
 
 
 // -------------------------------------------------------------------------------------------------------
-// BLOC D'INITIALISATION DU DOM (NE CONTIENT PAS LES FONCTIONS GLOBALES)
+// BLOC D'INITIALISATION DU DOM 
 // -------------------------------------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
     const doors = document.querySelectorAll('.door');
     
-    // -------------------------------------------------------------------------------------------------------
-    // 🟢 MODE TEST ACTIF : Mettre 25 pour tout ouvrir.
-    // POUR LA MISE EN PRODUCTION (Décembre), REMPLACEZ 25 PAR :
-    const currentDay = 25; // new Date().getDate(); 
-    // -------------------------------------------------------------------------------------------------------
+    const currentDay = 25; // Mode test, à remplacer par new Date().getDate(); 
 
-    // Initialisation : Vérifie l'état des portes (soumises ou verrouillées)
     doors.forEach(door => {
         const day = parseInt(door.dataset.day);
         
@@ -272,17 +233,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (day > currentDay) {
              door.classList.add('locked');
         } else {
-             door.classList.add('unlocked'); // Ajout pour le style si nécessaire
+             door.classList.add('unlocked');
         }
 
         // 2. GESTION DES SOUMISSIONS
         if (localStorage.getItem(`door_${day}_submitted`) === 'true') {
             door.classList.add('submitted');
             
-            // Récupère l'image pour l'afficher sur le recto
             const data = qcmData.find(d => d.day === day);
             if (data) {
-                // Mise à jour du recto (Image d'aperçu et texte)
                 const doorFront = door.querySelector('.door-front');
                 doorFront.innerHTML = `
                     <div class="submitted-content">
@@ -290,7 +249,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         <small>✅ Répondu</small>
                     </div>
                 `;
-                // Ajout de l'image au verso pour le cas où l'animation flip était prévue
                 const doorBack = door.querySelector('.door-back');
                 doorBack.innerHTML = `<img src="${data.image}" alt="Image du jour ${day}" style="width:100%; height:100%; object-fit:cover;">`;
             }
@@ -302,28 +260,24 @@ document.addEventListener('DOMContentLoaded', () => {
 }); // <--- FIN CORRECTE DU DOMContentLoaded
 
 // -------------------------------------------------------------------------------------------------------
-// FONCTIONS GLOBALES (DÉPLACÉES ICI POUR ÊTRE ACCESSIBLES PAR LE HTML ONCLICK)
+// FONCTIONS GLOBALES (DÉFINIES EN DEHORS DE DOMContentLoaded POUR ÊTRE ACCESSIBLES PAR LE HTML)
 // -------------------------------------------------------------------------------------------------------
 
-// FONCTIONS MODALES PRINCIPALES
 window.closePopup = function() {
     document.getElementById('door-overlay').classList.remove('active');
 };
 
-// Logique de clic à l'extérieur (mise à jour pour inclure les trois overlays)
 window.closePopupIfClickedOutside = function(e) {
     const targetId = e.target.id;
-    // Permet de fermer si on clique sur l'overlay pour le quiz ou le règlement
     if (targetId === 'door-overlay') {
         window.closePopup();
     } else if (targetId === 'reglement-overlay') {
         window.closeReglement();
     } 
-    // NE RIEN FAIRE si c'est 'gdpr-info-overlay' pour forcer l'utilisation du bouton "J'ai compris".
+    // gdpr-info-overlay ne doit pas se fermer ici
 };
 
 
-// Fonctionnalité Règlement
 window.openReglement = function() {
     document.getElementById('reglement-overlay').classList.add('active');
 };
@@ -332,7 +286,6 @@ window.closeReglement = function() {
     document.getElementById('reglement-overlay').classList.remove('active');
 };
 
-// Fonction de Réinitialisation
 window.resetCalendar = function() {
     if (confirm("Attention : Réinitialiser tout le calendrier ? Cette action ne supprime pas les entrées déjà enregistrées dans le Google Sheet.")) {
         localStorage.clear();
@@ -340,15 +293,11 @@ window.resetCalendar = function() {
     }
 };
     
-// Fonctionnalité Pop-up d'Information RGPD
 window.openGdprInfo = function() {
     document.getElementById('gdpr-info-overlay').classList.add('active');
 };
 
-// Fonction appelée par le bouton "J'ai compris"
 window.acceptGdprInfo = function() {
-    // Enregistrer l'acceptation (pour ne pas rouvrir si on garde le localStorage)
     localStorage.setItem('hasAcceptedGdprInfo', 'true'); 
-    // Fermer la modale
     document.getElementById('gdpr-info-overlay').classList.remove('active');
 };
