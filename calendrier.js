@@ -1,3 +1,6 @@
+// VERSION ALTERNATIVE DE CALENDRIER.JS
+// Cette version ajoute onclick directement aux portes si addEventListener ne fonctionne pas
+
 // ------------------------------------------------------------------------------------------------------
 // ⚠️ IMPORTANT : REMPLACEZ CETTE CHAÎNE PAR L'URL DE DÉPLOIEMENT DE VOTRE APPS SCRIPT (Web App URL)
 // ------------------------------------------------------------------------------------------------------
@@ -123,9 +126,6 @@ async function handleFormSubmit(e, data) {
             <button onclick="closePopup()" class="cta-button" style="margin-top: 30px;">Fermer</button>
         </div>
     `;
-
-    // ⌠Ne pas fermer la pop-up ici. Le message de confirmation s'affiche à la place du formulaire.
-    // window.closePopup(); 
 }
 
 
@@ -133,10 +133,6 @@ async function handleFormSubmit(e, data) {
 // 2. FONCTIONS DE POP-UP
 // =======================================================================================================
 
-/**
- * Construit et ouvre la Pop-up, gérant le cas spécial du jour 25.
- * @param {object} data Les données du QCM pour le jour sélectionné.
- */
 function openPopupWithData(data) {
     const popupContent = document.getElementById('popup-quiz-content');
     const overlay = document.getElementById('door-overlay');
@@ -212,34 +208,52 @@ function openPopupWithData(data) {
 
 
 // =======================================================================================================
-// 3. FONCTION DE CLIC PRINCIPALE
+// 3. FONCTION DE CLIC PRINCIPALE - VERSION GLOBALE POUR ONCLICK
 // =======================================================================================================
-const doorClickHandler = function(e) {
-    e.preventDefault();
-    e.stopPropagation();
+window.handleDoorClick = function(day) {
+    console.log('🚪 Clic sur la porte ' + day);
     
-    const doorElement = e.currentTarget; 
-    const day = parseInt(doorElement.dataset.day);
-
-    if (doorElement.classList.contains('locked') || doorElement.classList.contains('submitted')) {
+    const doorElement = document.getElementById(`day-${day}`);
+    
+    if (!doorElement) {
+        console.error('❌ Porte introuvable : day-' + day);
+        return;
+    }
+    
+    if (doorElement.classList.contains('locked')) {
+        console.log('🔒 Porte verrouillée');
+        return;
+    }
+    
+    if (doorElement.classList.contains('submitted')) {
+        console.log('✅ Déjà soumise');
         return;
     }
 
-    // Récupération des données (qcmData est défini dans qcm_data.js)
-    const data = qcmData.find(d => d.day === day); 
+    // Récupération des données
+    if (typeof qcmData === 'undefined') {
+        console.error('❌ qcmData non chargé !');
+        alert('Erreur: Les données du quiz ne sont pas chargées. Rechargez la page.');
+        return;
+    }
+    
+    const data = qcmData.find(d => d.day === day);
 
     if (data) {
-        openPopupWithData(data); // Ouvre la pop-up, gérant le cas spécial du jour 25 à l'intérieur
+        console.log('✅ Données trouvées pour le jour ' + day);
+        openPopupWithData(data);
     } else {
-        console.error("Aucune donnée trouvée pour le jour " + day + ". Veuillez vérifier qcm_data.js.");
+        console.error("❌ Aucune donnée trouvée pour le jour " + day);
     }
 };
 
 
 // =======================================================================================================
-// 4. BLOC D'INITIALISATION DU DOM (Définitions locales ici)
+// 4. BLOC D'INITIALISATION DU DOM
 // =======================================================================================================
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('📅 Initialisation du calendrier...');
+    
     const doors = document.querySelectorAll('.door');
     
     // -------------------------------------------------------------------------------------------------------
@@ -276,11 +290,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // 3. Ajout des écouteurs de clic
-        door.addEventListener('click', doorClickHandler);
+        // 3. AJOUT onclick DIRECTEMENT
+        // Cette méthode est plus compatible que addEventListener dans certains cas
+        door.setAttribute('onclick', `handleDoorClick(${day})`);
+        console.log(`✅ Porte ${day} initialisée avec onclick`);
     });
+    
+    console.log('✅ Calendrier initialisé avec succès !');
 }); 
-// 👆 ATTENTION : Le bloc DOMContentLoaded se termine ICI. Toutes les fonctions globales suivent.
 
 // =======================================================================================================
 // 5. FONCTIONS GLOBALES (Accessibles par l'HTML onclick)
@@ -310,12 +327,6 @@ window.closeReglement = function() {
     document.getElementById('reglement-overlay').classList.remove('active');
 };
 
-window.closeReglementIfClickedOutside = function(e) {
-    if (e.target.id === 'reglement-overlay') {
-        window.closeReglement();
-    }
-};
-
 // Fonctionnalité RGPD Info
 window.openGdprInfo = function() {
     document.getElementById('gdpr-info-overlay').classList.add('active');
@@ -326,7 +337,6 @@ window.closeGdprInfo = function() {
 };
 
 window.acceptGdprInfo = function() {
-    // Marquer que l'utilisateur a accepté les conditions
     localStorage.setItem('gdpr_info_accepted', 'true');
     window.closeGdprInfo();
 };
