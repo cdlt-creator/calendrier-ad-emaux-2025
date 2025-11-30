@@ -143,9 +143,9 @@ function openPopupWithData(data) {
             
             <input type="text" name="hp_field" class="honeypot" tabindex="-1" autocomplete="off">
             <input type="email" name="email" placeholder="Votre e-mail (obligatoire)" required>
-            
+
             <div class="rgpd-checkbox-container">
-                <input type="checkbox" id="rgpd_check" name="rgpd_consent" value="true">
+                <input type="checkbox" id="rgpd_check" name="rgpd_consent" value="true" required> // 🟢 AJOUT DE 'required'
                 <label for="rgpd_check">J'accepte d'être recontacté(e) et de recevoir la newsletter.</label>
             </div>
 
