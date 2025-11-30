@@ -125,11 +125,11 @@ function openPopupWithData(data) {
         popupContent.innerHTML = `
             <a href="#" class="close-btn" onclick="closePopup()">&times;</a>
             <div class="winner-announcement" style="text-align: center; padding: 40px;">
-                <h2 style="color: var(--accent-gold); font-family: 'Playfair Display', serif; font-size: 2.5em; margin-bottom: 0;">Joyeux Noël ! 🎉</h2>
+                <h2 style="color: var(--accent-gold); font-family: 'Playfair Display', serif; font-size: 2.5em; margin-bottom: 0;">Joyeux Noël ! ✨</h2>
                 <h1 style="color: var(--primary-marine); font-family: 'Playfair Display', serif; font-size: 3em; margin-top: 5px; margin-bottom: 30px;">Jour du Grand Tirage au Sort</h1>
                 
                 <p style="font-size: 1.2em; margin-bottom: 20px; font-weight: bold;">
-                    Merci à tous d'avoir participé à notre Calendrier de l'Avent !
+                    Merci à tous d'avoir participé à notre Calendrier de l'Avent
                 </p>
                 
                 <div style="padding: 20px; background-color: var(--light-bg); border: 2px solid var(--accent-gold); border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
