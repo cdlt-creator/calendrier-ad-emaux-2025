@@ -29,7 +29,7 @@ window.qcmData = [
     {
         day: 3,
         title: "Un Partenariat Textile",
-        question: "Avec quel type d'artisan d'art ai-je collaboré pour réaliser des co-créations dans le domaine du textile ?",
+        question: "Avec quel type d'artisan d'art, Anne de la Forge a-t-elle collaboré pour réaliser des co-créations dans le domaine du textile ?",
         image: "564629110_18556304542016266_5969967451891582940_nlow.webp",
         options: [
             { text: "A. Un Céramiste", value: "A" },
@@ -41,7 +41,7 @@ window.qcmData = [
     {
         day: 4,
         title: "Lumière et Émail",
-        question: "En collaboration avec des designers, mes créations se sont étendues aux luminaires. Quel format de luminaire est le plus souvent co-créé ?",
+        question: "En collaboration avec des designers, les créations d'Anne de la Forge se sont étendues aux luminaires. Quel format de luminaire est le plus souvent co-créé ?",
         image: "lampes3-luminaires.jpg",
         options: [
             { text: "A. Des lustres en cristal", value: "A" },
@@ -77,7 +77,7 @@ window.qcmData = [
     {
         day: 7,
         title: "Le Cœur du Cadeau",
-        question: "Selon AD Émaux, quelle est la véritable valeur émotionnelle d'un cadeau fait main ?",
+        question: "Selon Anne de la Forge, quelle est la véritable valeur émotionnelle d'un cadeau fait main ?",
         image: "Sculpture-Breaking-Wave.jpg",
         options: [
             { text: "A. Son prix élevé", value: "A" },
@@ -89,7 +89,7 @@ window.qcmData = [
     {
         day: 8,
         title: "Le Métal Privilégié",
-        question: "Quel métal est presque toujours utilisé comme support par AD Émaux pour l'émaillage chaud ?",
+        question: "Quel métal est presque toujours utilisé comme support par Anne de la Forge pour l'émaillage chaud ?",
         image: "ARCHIPEL-Anne-de-La-Forge (1).jpg",
         options: [
             { text: "A. L'aluminium", value: "A" },
@@ -113,7 +113,7 @@ window.qcmData = [
     {
         day: 10,
         title: "Co-création de Mobilier",
-        question: "Le concept de Duos et Dialogues permet à AD Émaux de réunir son savoir-faire avec celui d'un autre artisan d'art. Dans quel domaine l'artiste a-t-elle récemment réalisé des guéridons ?",
+        question: "Le concept de Duos et Dialogues permet de réunir son savoir-faire avec celui d'un autre artisan d'art. Dans quel domaine l'artiste a-t-elle récemment réalisé des guéridons ?",
         image: "gueridon.jpeg",
         options: [
             { text: "A. La Bijouterie", value: "A" },
@@ -185,7 +185,7 @@ window.qcmData = [
     {
         day: 16,
         title: "L'International II (Voyage)",
-        question: "AD Émaux a réalisé une œuvre pour un client de luxe à Genève, dans le secteur de :",
+        question: "Anne de la Forge a réalisé une œuvre pour un client de luxe à Genève, dans le secteur de :",
         image: "bleu.jpg",
         options: [
             { text: "A. La Maroquinerie", value: "A" },
@@ -233,7 +233,7 @@ window.qcmData = [
     {
         day: 20,
         title: "Le Temps de Création",
-        question: "Combien de temps faut-il pour créer une pièce d'émail unique et complexe chez AD Émaux ?",
+        question: "Combien de temps faut-il pour créer une pièce d'émail unique et complexe ?",
         image: "ECUME-OCEAN-BLEU-3-panneaux®-Anne-de-La-Forge-scaled.jpg",
         options: [
             { text: "A. Quelques heures (grâce aux machines)", value: "A" },
@@ -245,7 +245,7 @@ window.qcmData = [
     {
         day: 21,
         title: "L'Inspiration Naturelle",
-        question: "Quelles sont les principales sources d'inspiration des motifs et des couleurs des émaux d'AD Émaux ?",
+        question: "Quelles sont les principales sources d'inspiration des motifs et des couleurs des émaux d'Anne de la Forge ?",
         image: "ecume.jpg",
         options: [
             { text: "A. Les villes modernes et l'architecture", value: "A" },
@@ -257,7 +257,7 @@ window.qcmData = [
     {
         day: 22,
         title: "Le Geste Unique",
-        question: "Quelle est la signature qui rend chaque création d'AD Émaux absolument unique et sans équivalent ?",
+        question: "Quelle est la signature qui rend chaque création absolument unique et sans équivalent ?",
         image: "573705153_18562573573016266_5788673195324190255_nthumb.webp",
         options: [
             { text: "A. Une machine automatique", value: "A" },
