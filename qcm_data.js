@@ -289,8 +289,8 @@ const qcmData = [
             { text: "C. Le temps et l'âme que l'artiste investit dans chaque pièce", value: "C" }
         ],
         correctAnswer: "C"
-    }
-    // 🎁 ENTRÉE MANQUANTE POUR LE JOUR 25 🎁
+    },
+    // 🎁 ENTRÉE POUR LE JOUR 25 🎁
     {
         day: 25,
         title: "Jour du Grand Tirage",
