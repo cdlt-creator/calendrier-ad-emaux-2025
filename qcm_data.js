@@ -113,7 +113,7 @@ const qcmData = [
     {
         day: 10,
         title: "Co-création de Mobilier",
-        question: "Le concept de Duos et Dialogues permet de réunir son savoir-faire avec celui d'un autre artisan d'art. Dans quel domaine l'artiste a-t-elle récemment réalisé des guéridons ?",
+        question: "Le concept de Duos et Dialogues permet de réunir son savoir-faire avec celui d'un autre artisan d'art. Quel métier pratique l'artisan d'art avec qui j'ai réalisé des guéridons ?",
         image: "gueridon.jpeg",
         options: [
             { text: "A. La Bijouterie", value: "A" },
