@@ -90,7 +90,7 @@ const qcmData = [
         day: 8,
         title: "Le Métal Privilégié",
         question: "Quel métal est presque toujours utilisé comme support par Anne de la Forge pour l'émaillage chaud ?",
-        image: "ARCHIPEL-Anne-de-La-Forge (1).jpg",
+        image: "Ecumes-pieces-aimantees-Anne-de-La-FORGE-copie.jpg",
         options: [
             { text: "A. L'aluminium", value: "A" },
             { text: "B. Le titane", value: "B" },
@@ -234,7 +234,7 @@ const qcmData = [
         day: 20,
         title: "Le Temps de Création",
         question: "Combien de temps faut-il pour créer une pièce d'émail unique et complexe ?",
-        image: "ECUME-OCEAN-BLEU-3-panneaux®-Anne-de-La-Forge-scaled.jpg",
+        image: "ARCHIPEL-Anne-de-La-FORGE-1.jpg",
         options: [
             { text: "A. Quelques heures (grâce aux machines)", value: "A" },
             { text: "B. Quelques jours (pour les petites pièces)", value: "B" },
