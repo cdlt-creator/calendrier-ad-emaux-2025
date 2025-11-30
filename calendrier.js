@@ -96,9 +96,6 @@ async function handleFormSubmit(e, data) {
         // 2. Ajout de l'image au verso pour qu'elle s'affiche (pour le flip, si actif)
         const doorBack = door.querySelector('.door-back');
         doorBack.innerHTML = `<img src="${data.image}" alt="Image du jour ${data.day}" style="width:100%; height:100%; object-fit:cover;">`;
-        
-        // ❌ Retrait de la ligne problématique (on utilise la classe .submitted)
-        // door.style.pointerEvents = 'none'; 
     }
 
     // --- NOUVEAU CODE POUR L'AFFICHAGE DU MESSAGE (Remplacement des alertes) ---
@@ -136,7 +133,6 @@ async function handleFormSubmit(e, data) {
         </div>
     `;
 
-    // Suppression de l'ancienne logique de fermeture et d'alertes
 } // Fin de handleFormSubmit
 
 
@@ -145,7 +141,7 @@ function openPopupWithData(data) {
     const popupContent = document.getElementById('popup-quiz-content');
     const overlay = document.getElementById('door-overlay');
 
-    // --- NOUVEAU BLOC : GESTION SPÉCIFIQUE DU JOUR 25 (MESSAGE DE NOËL ET TIRAGE) ---
+    // --- GESTION SPÉCIFIQUE DU JOUR 25 (MESSAGE DE NOËL ET TIRAGE) ---
     if (data.day === 25) {
         
         popupContent.innerHTML = `
@@ -233,7 +229,14 @@ const doorClickHandler = function(e) {
 
     // Si c'est le jour 25 (Cadeau / Message final)
     if (day === 25) {
-        alert("Joyeux Noël ! Le tirage au sort aura lieu bientôt.");
+        // Cette alerte sera remplacée par openPopupWithData si la pop-up Jour 25 est ouverte.
+        // En attendant, on garde la logique précédente pour le jour 25
+        const data = qcmData.find(d => d.day === day);
+        if (data) {
+            openPopupWithData(data); // Ouvre la pop-up Jour 25 qui contient le message de Noël
+        } else {
+            alert("Joyeux Noël ! Le tirage au sort aura lieu bientôt.");
+        }
         return;
     }
 
@@ -307,7 +310,7 @@ window.closePopup = function() {
     document.getElementById('door-overlay').classList.remove('active');
 };
 
-// Logique de clic à l'extérieur (si l'ID est 'door-overlay' ou 'reglement-overlay')
+// Logique de clic à l'extérieur (mise à jour pour inclure les trois overlays)
 window.closePopupIfClickedOutside = function(e) {
     const targetId = e.target.id;
     // Permet de fermer si on clique sur l'overlay pour le quiz ou le règlement
@@ -316,7 +319,7 @@ window.closePopupIfClickedOutside = function(e) {
     } else if (targetId === 'reglement-overlay') {
         window.closeReglement();
     } 
-    // NE RIEN FAIRE si c'est 'gdpr-info-overlay' pour forcer l'utilisation du bouton "J'ai compris"
+    // NE RIEN FAIRE si c'est 'gdpr-info-overlay' pour forcer l'utilisation du bouton "J'ai compris".
 };
 
 
