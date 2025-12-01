@@ -64,25 +64,25 @@ const qcmData = [
     },
     {
         day: 6,
-        title: "La Maîtrise du Feu",
-        question: "Quel est le défi le plus important dans le processus de cuisson, où l'émail se révèle ?",
+        title: "Jouer avec les couleurs",
+        question: "Quel est l'un des défis important dans le processus de vitrification ?",
         image: "emaux-sur-cuivre-collection-TERRES-MESSAGERES-@ANNE-DE-LA-FORGE-1detail.jpg",
         options: [
-            { text: "A. Le bruit du four", value: "A" },
-            { text: "B. La fumée émise", value: "B" },
-            { text: "C. Anticiper le changement de couleur et les réactions chimiques", value: "C" }
+            { text: "A. Comprendre la personnalité de ses émaux", value: "A" },
+            { text: "B. Ajouter plus d'émail pour éviter les défauts", value: "B" },
+            { text: "C. Ajouter de l'eau", value: "C" }
         ],
-        correctAnswer: "C"
+        correctAnswer: "A"
     },
     {
         day: 7,
-        title: "Le Cœur du Cadeau",
-        question: "Selon Anne de la Forge, quelle est la véritable valeur émotionnelle d'un cadeau fait main ?",
+        title: "Au Cœur du Cadeau",
+        question: "Quelle est l'une des valeurs d'un cadeau réalisé par un Artisan d'Art ?",
         image: "Sculpture-Breaking-Wave.jpg",
         options: [
             { text: "A. Son prix élevé", value: "A" },
             { text: "B. Le packaging luxueux", value: "B" },
-            { text: "C. L'histoire que raconte l'artisanat derrière la pièce", value: "C" }
+            { text: "C. L’attention unique apportée à la création", value: "C" }
         ],
         correctAnswer: "C"
     },
