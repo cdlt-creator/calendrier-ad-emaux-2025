@@ -29,7 +29,7 @@ const qcmData = [
     {
         day: 3,
         title: "Un Partenariat Textile",
-        question: "Avec lequel de ces artisans , Anne de la Forge, a-telle travaillé sur ce projet ?",
+        question: "Avec lequel de ces artisans , Anne de la Forge, a-t-elle travaillé sur ce projet ?",
         image: "564629110_18556304542016266_5969967451891582940_nlow.webp",
         options: [
             { text: "A. Un Céramiste", value: "A" },
@@ -52,15 +52,15 @@ const qcmData = [
     },
     {
         day: 5,
-        title: "Le Secret du Cloisonné",
-        question: "Dans la technique du Cloisonné, à quoi servent les fines bandes de cuivre ou d'or fixées sur le support ?",
-        image: "cloison.jpg",
+        title: "La naissance de la matière-lumière",
+        question: "Qu'est ce que la vitrification ?",
+        image: "SOSSUVLEI-Anne-de-La-Forge.jpg",
         options: [
-            { text: "A. Pour obtenir des motifs abstraits aléatoires", value: "A" },
-            { text: "B. Pour obtenir des formes simples et fluides", value: "B" },
-            { text: "C. Pour obtenir des détails fins et une grande précision du dessin", value: "C" }
+            { text: "A. Appliquer une couche de vernis brillant sur le cuivre", value: "A" },
+            { text: "B. Fusionner l’émail en verre à haute température", value: "B" },
+            { text: "C. Faire sécher l’émail à l’air libre", value: "C" }
         ],
-        correctAnswer: "C"
+        correctAnswer: "B"
     },
     {
         day: 6,
