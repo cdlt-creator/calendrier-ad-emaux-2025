@@ -127,16 +127,15 @@
             position: relative; 
             z-index: 10;  
         }
-        /* Case 25 spéciale - 2x plus large et centrée */
+       /* Case 25 spéciale - 3 colonnes, centrée */
 #day-25 {
-    grid-column: span 2 !important;  /* Prend 2 colonnes */
-    margin: 0 auto;                  /* Centre horizontalement */
+    grid-column: 3 / 6 !important;  /* Colonnes 3, 4, 5 */
 }
 
-/* Sur mobile, occuper toute la largeur */
+/* Sur mobile */
 @media (max-width: 768px) {
     #day-25 {
-        grid-column: span 2 !important;
+        grid-column: 1 / 3 !important;  /* Prend les 2 colonnes */
     }
 }
         /* Styles des Portes (QCM) */
