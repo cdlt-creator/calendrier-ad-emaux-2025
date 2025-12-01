@@ -4,27 +4,27 @@
 const qcmData = [
     {
         day: 1,
-        title: "La Vague et le Mystère",
-        question: "La collection BELHARRA est inspirée par une vague mythique du Pays Basque. Quelle caractéristique met en valeur cette collection ?",
+        title: "Le Mystère de la déferlante",
+        question: "La collection BELHARRA est inspirée par une vague mythique du Pays Basque. Quelle caractéristique met en valeur cette création murale ?",
         image: "Creation-murale-Belharra-emaux-dorfeve-sur-cuivre_3-Anne-de-La-Forge-copie.jpg",
         options: [
             { text: "A. Le calme et l'immobilité de l'océan", value: "A" },
             { text: "B. Les fonds marins profonds et silencieux", value: "B" },
-            { text: "C. La puissance et le mouvement d'une vague", value: "C" }
+            { text: "C. L'ondulation de la vague", value: "C" }
         ],
         correctAnswer: "C"
     },
     {
         day: 2,
-        title: "La Poudre et l'Art",
-        question: "Comment dépose-t-on les fines couches de poudre d'émail pour les motifs complexes sur le cuivre ?",
-        image: "ateliers-decouverte-emaux.jpg",
+        title: "La Magie du saupoudrage",
+        question: "Comment dépose-t-on les fines couches d'émail d'orfèvre dans une technique à sec ?",
+        image: "jour 2_la magie du saupoudrage.jpg",
         options: [
             { text: "A. Par immersion dans un bain", value: "A" },
-            { text: "B. Avec un pistolet à air comprimé", value: "B" },
-            { text: "C. À la main, à l'aide d'une fine spatule ou tamis fin", value: "C" }
+            { text: "B. À la main, à l'aide d'un tamis", value: "B" },
+             { text: "C. Avec un pistolet à air comprimé", value: "C" }
         ],
-        correctAnswer: "C"
+        correctAnswer: "B"
     },
     {
         day: 3,
