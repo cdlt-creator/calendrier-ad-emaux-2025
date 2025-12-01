@@ -245,7 +245,7 @@ function openPopupWithData(data) {
             
             <div class="rgpd-checkbox-container">
                 <input type="checkbox" id="rgpd_check" name="rgpd_consent" value="true">
-                <label for="rgpd_check">J'accepte d'être recontacté(e) et de recevoir la newsletter.</label>
+                <label for="rgpd_check">J'accepte d'être recontacté(e) et de recevoir la newsletter. <a href="#" onclick="openGdprInfo(); return false;" style="color: var(--primary-marine); text-decoration: underline;">Politique de confidentialité</a></label>
             </div>
 
             <button type="submit" class="btn-submit">Je valide et participe</button>
