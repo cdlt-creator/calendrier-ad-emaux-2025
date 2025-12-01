@@ -284,7 +284,7 @@ window.handleDoorClick = function(day) {
         if (day > currentDay) {
             alert(`Cette porte s'ouvrira le ${day} décembre ! 🎄`);
         } else {
-            alert(`Cette porte du ${day} décembre est maintenant fermée. ⏰\n\nUne seule chance par jour ! Rendez-vous aujourd'hui pour participer.`);
+            alert(`Cette porte du ${day} décembre est maintenant fermée. ⏰\n\nUne seule chance par jour ! Rendez-vous à la date du jour pour participer.`);
         }
         return;
     }
