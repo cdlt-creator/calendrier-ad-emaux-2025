@@ -1,10 +1,73 @@
 // ═══════════════════════════════════════════════════════════════════════════════
-// CALENDRIER DE L'AVENT AD ÉMAUX - TOUTES PORTES OUVERTES
+// CALENDRIER DE L'AVENT AD ÉMAUX - OPTION B : SEUL LE JOUR ACTUEL ACCESSIBLE
 // ═══════════════════════════════════════════════════════════════════════════════
+// Comportement : Si un jour n'est pas répondu, il devient INACCESSIBLE
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ⚙️ MODE TEST - ACTIVATION/DÉSACTIVATION
+// ═══════════════════════════════════════════════════════════════════════════════
+const TEST_MODE = false; // ⚠️ Mettre à false pour le lancement !
+const TEST_DATE = null;
 
 const APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxWrdi9dEkmfFFgSnLRYuJpEgM-oTB3Zq3Z6WVrrvV3MgSUo-qtZXpN976-A4iAOcBs/exec'; 
 
-console.log("🎄 Calendrier de l'Avent AD Émaux chargé");
+console.log("🎄 Calendrier de l'Avent AD Émaux chargé - Mode : Une chance par jour !");
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// 📅 FONCTION DE GESTION DES DATES
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function getCurrentDate() {
+    if (TEST_DATE !== null) {
+        console.log(`🧪 MODE TEST DATE : ${TEST_DATE}`);
+        return new Date(TEST_DATE);
+    }
+    return new Date();
+}
+
+function getCurrentDay() {
+    const now = getCurrentDate();
+    const day = now.getDate();
+    const month = now.getMonth() + 1;
+    const year = now.getFullYear();
+    
+    if (month === 12 && year === 2024) {
+        return day;
+    }
+    else if (year > 2024 || (year === 2024 && month > 12)) {
+        return 26;
+    }
+    else {
+        return 0;
+    }
+}
+
+// 🆕 NOUVELLE LOGIQUE : Une porte est accessible SEULEMENT si :
+// 1. C'est le jour actuel ET elle n'a pas été répondue
+// 2. OU elle a déjà été répondue (pour afficher l'image)
+function isDoorUnlocked(doorDay) {
+    if (TEST_MODE) {
+        return true; // Mode test : toutes les portes ouvertes
+    }
+    
+    const currentDay = getCurrentDay();
+    const hasBeenSubmitted = localStorage.getItem(`door_${doorDay}_submitted`) === 'true';
+    
+    // Une porte est déverrouillée si :
+    // - C'est le jour actuel (peu importe si répondue ou non)
+    // - OU elle a déjà été répondue (pour afficher l'image)
+    if (doorDay === currentDay) {
+        return true; // Le jour actuel est toujours accessible
+    }
+    
+    if (hasBeenSubmitted) {
+        return true; // Les portes répondues restent visibles (pour afficher l'image)
+    }
+    
+    // Tous les autres cas : verrouillée
+    return false;
+}
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // FONCTIONS DE TRAITEMENT (NE PAS TOUCHER - Ça marche déjà)
@@ -35,34 +98,24 @@ async function handleFormSubmit(e, data) {
     e.preventDefault();
     const form = e.target;
     
-    // 1. RÉCUPÉRATION DES VALEURS DU FORMULAIRE
     const email = form.querySelector('input[name="email"]').value;
     const selectedOption = form.querySelector(`input[name="reponse_jour_${data.day}"]:checked`);
-    // 'rgpd' est un booléen : true si cochée, false si non cochée
     const rgpd = form.querySelector('input[name="rgpd_consent"]').checked;
     
-    
-    // 2. VÉRIFICATIONS OBLIGATOIRES AVEC ALERTE JS
-    
-    // VÉRIFICATION 1 : RGPD OBLIGATOIRE
     if (!rgpd) {
         alert("Veuillez cocher la case pour accepter d'être recontacté(e) et recevoir la newsletter afin de valider votre participation.");
-        return; // Arrête la fonction
+        return;
     }
     
-    // VÉRIFICATION 2 : RÉPONSE QCM OBLIGATOIRE
     if (!selectedOption) {
         alert("Veuillez sélectionner une réponse pour valider votre participation.");
-        return; // Arrête la fonction
+        return;
     }
 
-    // VÉRIFICATION 3 : EMAIL OBLIGATOIRE
     if (!email || email.trim() === '') {
         alert("Veuillez entrer une adresse e-mail.");
-        return; // Arrête la fonction
+        return;
     }
-
-    // Le code continue ici si toutes les vérifications sont passées
     
     const hp = form.querySelector('input[name="hp_field"]').value;
     if (hp) {
@@ -209,7 +262,7 @@ function openPopupWithData(data) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// FONCTION DE CLIC - NOUVELLE VERSION QUI FONCTIONNE
+// FONCTION DE CLIC - AVEC GESTION STRICTE DU VERROUILLAGE
 // ═══════════════════════════════════════════════════════════════════════════════
 
 window.handleDoorClick = function(day) {
@@ -224,7 +277,15 @@ window.handleDoorClick = function(day) {
     
     if (doorElement.classList.contains('locked')) {
         console.log(`🔒 Porte ${day} verrouillée`);
-        alert(`Cette porte s'ouvrira le ${day} décembre ! 🎄`);
+        
+        const currentDay = getCurrentDay();
+        
+        // Message différent selon si c'est un jour futur ou passé
+        if (day > currentDay) {
+            alert(`Cette porte s'ouvrira le ${day} décembre ! 🎄`);
+        } else {
+            alert(`Cette porte du ${day} décembre est maintenant fermée. ⏰\n\nUne seule chance par jour ! Rendez-vous aujourd'hui pour participer.`);
+        }
         return;
     }
     
@@ -252,27 +313,34 @@ window.handleDoorClick = function(day) {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// INITIALISATION - TOUTES LES PORTES OUVERTES
+// INITIALISATION - MODE STRICT : SEUL LE JOUR ACTUEL EST ACCESSIBLE
 // ═══════════════════════════════════════════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🎄 Initialisation du Calendrier de l\'Avent...');
+    console.log('⚠️  Mode STRICT : Une seule chance par jour !');
     
     const doors = document.querySelectorAll('.door');
+    const currentDay = getCurrentDay();
     
-    console.log('🔓 Mode: TOUTES LES PORTES OUVERTES');
+    if (TEST_MODE) {
+        console.log('%c🧪 MODE TEST ACTIVÉ - TOUTES LES PORTES OUVERTES', 'background: #ff9800; color: white; padding: 10px; font-size: 14px; font-weight: bold;');
+    } else {
+        console.log(`📅 Mode Production - Jour actuel : ${currentDay}`);
+        if (TEST_DATE) {
+            console.log(`🗓️ Date simulée : ${TEST_DATE}`);
+        }
+    }
 
     doors.forEach(door => {
         const day = parseInt(door.dataset.day);
         
-        // TOUTES LES PORTES SONT DÉVERROUILLÉES
-        door.classList.add('unlocked');
-        door.classList.remove('locked');
-        console.log(`✅ Porte ${day} : OUVERTE`);
-
         // GESTION DES SOUMISSIONS (portes déjà répondues)
-        if (localStorage.getItem(`door_${day}_submitted`) === 'true') {
+        const hasBeenSubmitted = localStorage.getItem(`door_${day}_submitted`) === 'true';
+        
+        if (hasBeenSubmitted) {
             door.classList.add('submitted');
+            door.classList.add('unlocked'); // Pour que isDoorUnlocked retourne true
             
             const data = qcmData.find(d => d.day === day);
             if (data) {
@@ -286,15 +354,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 const doorBack = door.querySelector('.door-back');
                 doorBack.innerHTML = `<img src="${data.image}" alt="Image du jour ${day}" style="width:100%; height:100%; object-fit:cover;">`;
             }
+            console.log(`✅ Porte ${day} : RÉPONDUE`);
+        }
+        // GESTION DES ÉTATS : SEUL LE JOUR ACTUEL EST OUVERT (sauf si déjà répondu)
+        else {
+            if (isDoorUnlocked(day)) {
+                door.classList.add('unlocked');
+                door.classList.remove('locked');
+                console.log(`✅ Porte ${day} : OUVERTE (jour actuel)`);
+            } else {
+                door.classList.add('locked');
+                door.classList.remove('unlocked');
+                
+                if (day < currentDay) {
+                    console.log(`🔒 Porte ${day} : VERROUILLÉE (jour passé non répondu)`);
+                } else {
+                    console.log(`🔒 Porte ${day} : VERROUILLÉE (jour futur)`);
+                }
+            }
         }
 
-        // AJOUT DU GESTIONNAIRE DE CLIC (nouvelle méthode qui fonctionne)
+        // AJOUT DU GESTIONNAIRE DE CLIC
         door.onclick = function() {
             handleDoorClick(day);
         };
     });
     
-    console.log('✅ Calendrier initialisé - Toutes les portes sont ouvertes !');
+    if (TEST_MODE) {
+        console.log('%c✅ Calendrier initialisé - MODE TEST', 'background: #4caf50; color: white; padding: 10px; font-size: 14px; font-weight: bold;');
+    } else {
+        console.log('✅ Calendrier initialisé - Mode Production STRICT');
+        console.log('⚠️  Rappel : Une seule chance par jour !');
+    }
 }); 
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -337,7 +428,7 @@ window.acceptGdprInfo = function() {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// FONCTION DE RESET
+// FONCTIONS DE DEBUG ET TEST
 // ═══════════════════════════════════════════════════════════════════════════════
 
 window.resetCalendar = function() {
@@ -348,22 +439,43 @@ window.resetCalendar = function() {
     }
 };
 
-// Afficher l'état du calendrier
 window.showCalendarStatus = function() {
     console.log('═══════════════════════════════════════════════════════════');
-    console.log('📊 ÉTAT DU CALENDRIER');
+    console.log('📊 ÉTAT DU CALENDRIER - MODE STRICT');
     console.log('═══════════════════════════════════════════════════════════');
-    console.log('Mode : 🔓 TOUTES LES PORTES OUVERTES');
+    console.log(`Mode : ${TEST_MODE ? '🧪 TEST (toutes portes ouvertes)' : '📅 PRODUCTION STRICT (une chance par jour)'}`);
     
-    let submittedDays = [];
-    for (let i = 1; i <= 25; i++) {
-        if (localStorage.getItem(`door_${i}_submitted`) === 'true') {
-            submittedDays.push(i);
+    if (!TEST_MODE) {
+        const currentDay = getCurrentDay();
+        console.log(`Jour actuel : ${currentDay}`);
+        if (TEST_DATE) {
+            console.log(`Date simulée : ${TEST_DATE}`);
         }
+        console.log(`Porte accessible aujourd'hui : ${currentDay}`);
+        
+        let submittedDays = [];
+        let missedDays = [];
+        
+        for (let i = 1; i < currentDay; i++) {
+            if (localStorage.getItem(`door_${i}_submitted`) === 'true') {
+                submittedDays.push(i);
+            } else {
+                missedDays.push(i);
+            }
+        }
+        
+        console.log(`Portes répondues : ${submittedDays.length > 0 ? submittedDays.join(', ') : 'Aucune'}`);
+        console.log(`Portes manquées (fermées) : ${missedDays.length > 0 ? missedDays.join(', ') : 'Aucune'}`);
     }
-    console.log(`Portes déjà répondues : ${submittedDays.length > 0 ? submittedDays.join(', ') : 'Aucune'}`);
+    
     console.log('═══════════════════════════════════════════════════════════');
 };
 
-console.log('%c🎄 Toutes les portes sont ouvertes pour les tests ! 🎄', 'background: #4caf50; color: white; padding: 10px; font-size: 14px; font-weight: bold;');
+if (TEST_MODE) {
+    console.log('%c🧪 MODE TEST ACTIVÉ', 'background: #ff9800; color: white; padding: 10px; font-size: 16px; font-weight: bold;');
+    console.log('%cToutes les portes sont ouvertes pour les tests !', 'background: #4caf50; color: white; padding: 5px;');
+} else {
+    console.log('%c📅 MODE PRODUCTION STRICT', 'background: #2196F3; color: white; padding: 10px; font-size: 16px; font-weight: bold;');
+    console.log('%c⚠️ Une seule chance par jour !', 'background: #ff5722; color: white; padding: 5px;');
+}
 console.log('Commandes disponibles : resetCalendar() | showCalendarStatus()');
