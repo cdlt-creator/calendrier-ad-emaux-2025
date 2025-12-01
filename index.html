@@ -127,7 +127,18 @@
             position: relative; 
             z-index: 10;  
         }
-        
+        /* Case 25 spéciale - 2x plus large et centrée */
+#day-25 {
+    grid-column: span 2 !important;  /* Prend 2 colonnes */
+    margin: 0 auto;                  /* Centre horizontalement */
+}
+
+/* Sur mobile, occuper toute la largeur */
+@media (max-width: 768px) {
+    #day-25 {
+        grid-column: span 2 !important;
+    }
+}
         /* Styles des Portes (QCM) */
         .door {
             position: relative;
