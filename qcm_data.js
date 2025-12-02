@@ -138,7 +138,7 @@ const qcmData = [
         day: 12,
         title: "L’instant où tout bascule",
         question: "Combien de temps reste une pièce dans le four ?",
-        image: "jour 12- Marion Saupin 2025-92.JPG",
+        image: "jour_12_recadre.jpg",
         options: [
             { text: "A. Quelques minutes seulement", value: "A" },
             { text: "B. Une heure entière", value: "B" },
@@ -186,7 +186,7 @@ const qcmData = [
         day: 16,
         title: "Le maître du feu",
         question: "À quelle température les pièces passent-elles au four?",
-        image: "jour 16 - Marion Saupin 2025-84.JPG",
+        image: "jour_16_recadre.jpg",
         options: [
             { text: "A. Entre 450 °C et 550 °C", value: "A" },
             { text: "B. Autour de 850 °C", value: "B" },
@@ -210,7 +210,7 @@ const qcmData = [
         day: 18,
         title: "Les infinies nuances",
         question: "Pourquoi deux pièces émaillées de la même couleur peuvent-elles être légèrement différentes ?",
-        image: "jour 18.jpg",
+        image: "jour_18_recadre.jpg",
         options: [
             { text: "A. Parce qu'il peut y avoir des variations de température et de quantité de matière", value: "A" },
             { text: "B. Parce que les pigments changent selon l'hydrométrie", value: "B" },
@@ -270,7 +270,7 @@ const qcmData = [
         day: 23,
         title: "Avant le feu, il y avait…",
         question: "Quelle était ma profession avant de devenir émailleur ?",
-        image: "jour 23 - Marion Saupin 2025-101.JPG",
+        image: "jour_23_recadre.jpg",
         options: [
             { text: "A. Chimiste", value: "A" },
             { text: "B. Restauratrice d’œuvres d’art", value: "B" },
@@ -282,7 +282,7 @@ const qcmData = [
         day: 24,
         title: "La magie de l'émail",
         question: "Que fait  la lumière lorsqu’elle rencontre l’émail ?",
-        image: "jour 24  - Marion Saupin 2025-95.JPG",
+        image: "jour_24_recadre.jpg",
         options: [
             { text: "A. Elle lui donne vie", value: "A" },
             { text: "B. Elle s’éteint au contact du cuivre", value: "B" },
