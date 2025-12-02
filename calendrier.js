@@ -103,7 +103,7 @@ async function handleFormSubmit(e, data) {
     const rgpd = form.querySelector('input[name="rgpd_consent"]').checked;
     
     if (!rgpd) {
-        alert("Veuillez cocher la case pour accepter d'être recontacté(e) et recevoir la newsletter afin de valider votre participation.");
+        alert("Veuillez cocher la case pour accepter d'être recontacté(e) afin de valider votre participation.");
         return;
     }
     
@@ -245,7 +245,7 @@ function openPopupWithData(data) {
             
             <div class="rgpd-checkbox-container">
                 <input type="checkbox" id="rgpd_check" name="rgpd_consent" value="true">
-                <label for="rgpd_check">J'accepte d'être recontacté(e) et de recevoir la newsletter. <a href="#" onclick="openGdprInfo(); return false;" style="color: var(--primary-marine); text-decoration: underline;">Politique de confidentialité</a></label>
+                <label for="rgpd_check">J'accepte d'être recontacté(e). <a href="#" onclick="openGdprInfo(); return false;" style="color: var(--primary-marine); text-decoration: underline;">Politique de confidentialité</a></label>
             </div>
 
             <button type="submit" class="btn-submit">Je valide et participe</button>
